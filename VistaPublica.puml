@@ -1,0 +1,158 @@
+@startuml
+class Casilla [[java:chess.Casilla]] {
+	-int x
+	-int y
+	-String letraY
+	+Casilla(int x, int y)
+	+void colocarPieza(String tipo, String color)
+	+String toString()
+	+String getLetraY()
+	+void setLetraY(String letraY)
+	+Pieza getPieza()
+	+void setPieza(Pieza pieza)
+}
+class Pieza [[java:chess.Pieza]] {
+}
+Casilla --> "0-1" Pieza : pieza
+class Chess [[java:chess.Chess]] {
+	+void jugar()
+	-boolean quiereContinuar()
+	+{static}void main(String[] args)
+}
+class Tablero [[java:programaOrientadoObjetos.Tablero]] {
+}
+Chess *--> "1" Tablero : tablero
+class Console [[java:mastermind.Console]] {
+}
+Chess --> "1" Console : consola
+class Console [[java:chess.Console]] {
+	-{static}Console console
+	-BufferedReader bufferedReader
+	+{static}Console getInstance()
+	+String readString(String title)
+	+String readString()
+	+int readInt(String title)
+	+char readChar(String title)
+	+void writeln()
+	+void write(String string)
+	+void write(int integer)
+	+void writeln(String string)
+	+void writeln(int integer)
+	+void write(char character)
+	+void writeError(String format)
+}
+class Coordenada [[java:chess.Coordenada]] {
+	-int x
+	-int y
+	+Coordenada(int x, int y)
+	+int getX()
+	+void setX(int x)
+	+int getY()
+	+void setY(int y)
+	+boolean esIgualA(Coordenada c)
+	+String toString()
+}
+class Torre [[java:chess.Torre]] {
+	+Torre(String color)
+	+RequisitosMovimiento esMovimientoPosible(Coordenada origen, Coordenada destino)
+}
+class Pieza [[java:chess.Pieza]] {
+}
+Pieza <|-- Torre
+class Caballo [[java:chess.Caballo]] {
+	+Caballo(String color)
+	+RequisitosMovimiento esMovimientoPosible(Coordenada origen, Coordenada destino)
+	-ArrayList<Coordenada> obtenerMovimientosPosibles()
+}
+class Pieza [[java:chess.Pieza]] {
+}
+Pieza <|-- Caballo
+
+abstract class Pieza [[java:chess.Pieza]] {
+	#String tipo
+	#String color
+	+Pieza()
+	+Pieza(String tipo, String color)
+	+{abstract}RequisitosMovimiento esMovimientoPosible(Coordenada origen, Coordenada destino)
+	+String getTipo()
+	+void setTipo(String tipo)
+	+String getColor()
+	+void setColor(String color)
+}
+class Peon [[java:chess.Peon]] {
+	+Peon(String color)
+	+RequisitosMovimiento esMovimientoPosible(Coordenada origen, Coordenada destino)
+}
+class Pieza [[java:chess.Pieza]] {
+}
+Pieza <|-- Peon
+class Movimiento [[java:chess.Movimiento]] {
+	-Casilla[][] casillas
+	-String fichasQueMueven
+	~String jugadaEnFormatoLNLN
+	+Movimiento(Casilla[][] casillas, int numMovimiento)
+	+void leer()
+	-String chequeaError(String textoIntroducido)
+	-boolean estanLasCasillasNecesariasVacias(ArrayList<Coordenada> arrayList)
+	-void moverPieza()
+}
+class Coordenada [[java:programaOrientadoObjetos.Coordenada]] {
+}
+Movimiento --> "1" Coordenada : coordenadaOrigen
+class Coordenada [[java:programaOrientadoObjetos.Coordenada]] {
+}
+Movimiento --> "1" Coordenada : coordenadaDestino
+class Console [[java:mastermind.Console]] {
+}
+Movimiento --> "1" Console : consola
+class Tablero [[java:chess.Tablero]] {
+	#{static}int longitudTablero
+	-Casilla[][] casillas
+	-ArrayList<Movimiento> movimientos
+	-int numJugada
+	+Tablero()
+	+void jugar()
+	+void imprimir()
+	-void colocarPiezasIniciales()
+	-void colocarPiezas(String[] piezas, String tipo, String color)
+	+{static}void main(String[] args)
+}
+class Console [[java:mastermind.Console]] {
+}
+Tablero --> "1" Console : consola
+Tablero *--> "*" Movimiento : movimientos
+Tablero *--> "*" Casilla : casillas
+class Rey [[java:chess.Rey]] {
+	+Rey(String color)
+	+RequisitosMovimiento esMovimientoPosible(Coordenada origen, Coordenada destino)
+	-ArrayList<Coordenada> obtenerMovimientosPosibles()
+}
+class Pieza [[java:chess.Pieza]] {
+}
+Pieza <|-- Rey
+
+class RequisitosMovimiento [[java:chess.RequisitosMovimiento]] {
+	-boolean esMovimientoPosible
+	-ArrayList<Coordenada> casillasLibresNecesariasParaMover
+	-boolean necesitaPiezaRivalEnDestino
+	+RequisitosMovimiento()
+	+boolean esMovimientoPosible()
+	+ArrayList<Coordenada> casillasLibresNecesariasParaMover()
+	+boolean necesitaPiezaRivalEnDestino()
+	+void esMovimientoPosible(boolean esMovimientoPosible)
+	+void casillasLibresNecesariasParaMover(ArrayList<Coordenada> casillasLibresNecesariasParaMover)
+	+void necesitaPiezaRivalEnDestino(boolean necesitaPiezaRivalEnDestino)
+}
+class Alfil [[java:chess.Alfil]] {
+	+Alfil(String color)
+	+RequisitosMovimiento esMovimientoPosible(Coordenada origen, Coordenada destino)
+	-boolean esMovimientoPosible(int xOrigen, int yOrigen, int xDestino, int yDestino)
+	-Coordenada calcularDiferenciaMovimiento(int xOrigen, int yOrigen, int xDestino, int yDestino)
+}
+class Pieza [[java:chess.Pieza]] {
+}
+Pieza <|-- Alfil
+
+Pieza --> RequisitosMovimiento
+Movimiento --> RequisitosMovimiento
+@enduml
