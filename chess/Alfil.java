@@ -20,8 +20,6 @@ public final class Alfil extends Pieza {
 			return requisitos;
 		}
 		requisitos.casillasLibresNecesariasParaMover(origen.coordenadasIntermedias(destino));
-		//System.out.println("Intentando Movimiento de Alfil de color:" + color);
-		//System.out.println("Necesito vac�as las Coordenadas:" + origen.coordenadasIntermedias(destino));
 		return requisitos;
 	}
 
