@@ -1,5 +1,8 @@
 package chess;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 public class Casilla {
 	private int x;
 	private int y;
@@ -12,38 +15,31 @@ public class Casilla {
 		this.setLetraY(LetraColumna.obtenerLetra(x));
 	}
 	
-	public void colocarPieza(String tipo, String color) {
-		switch (tipo) {
-			case "Rey":
-				pieza = new Rey(color);
-				break;	
-			case "Peon":
-				pieza = new Peon(color);
-				break;
-			case "Caballo":
-				pieza = new Caballo(color);
-				break;
-			case "Torre":
-				pieza = new Torre(color);
-				break;
-			case "Alfil":
-				pieza = new Alfil(color);
-				break;
+	public void colocarPieza(String tipo, String color){
+		try {
+			Constructor<?> constr = Class.forName(tipo).getConstructor(String.class);
+			pieza = (Pieza) constr.newInstance(color) ;
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | InstantiationException
+				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			e.printStackTrace();
 		}	
 	}
+	
 
 	public String toString(){
+		//System.out.println("x=" + x + " e y=" + y + "  y el MOD="+ ((x+y) % 2) );
 		if (pieza == null) {
 			if (((x+y) % 2) == 0 )
-				return "     ";
+				return " " + new String(Character.toChars(9866)) + " ";//new String(Character.toChars(32));
 			else
-				return "  �  ";
+				return " " + new String(Character.toChars(9867)) + " ";
 		}	
 		else {
 			
-			return " " + pieza.getTipo().substring(0, 1) + " "  + pieza.getColor().substring(0, 1) + " ";
+			return " " + pieza.getSimbolo() + " ";
 		}
 	}
+
 	
 	public String getLetraY() {
 		return letraY;
@@ -60,4 +56,6 @@ public class Casilla {
 	public void setPieza(Pieza pieza) {
 		this.pieza = pieza;
 	}
+
+
 }

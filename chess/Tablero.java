@@ -13,6 +13,7 @@ public class Tablero {
 	
 	public Tablero(){
 		
+		// Inicializa las 64 casillas
 		casillas = new Casilla[longitudTablero][longitudTablero];
 		for (int i = 0; i < casillas.length; i++) {
 			for (int j = 0; j < casillas.length; j++) {
@@ -22,6 +23,7 @@ public class Tablero {
 		movimientos = new ArrayList<Movimiento>();
 		numJugada = 0;
 		colocarPiezasIniciales();
+		
 	}
 
 	public void jugar() {
@@ -29,6 +31,7 @@ public class Tablero {
 		imprimir();
 		do {
 			movimientos.add(new Movimiento(casillas, numJugada));
+			hayJaqueMate = movimientos.get(numJugada).esJaqueMate();
 			numJugada++;
 			imprimir();
 		} while (!hayJaqueMate);
@@ -44,41 +47,49 @@ public class Tablero {
 
 	public void imprimir() {
 		consola.write("\n\n\n\n\n\n\n\n\n\n\n\n\nTablero:\n\n");
-		consola.write("    ----- ----- ----- ----- ----- ----- ----- -----\n");
+		consola.write("    -- -- -- -- -- -- -- -- -- -- -- --\n");
 		for (int y = casillas.length-1; y >= 0 ; y--) {
 			consola.write(y+1 + "  |");
 			for (int x = 0; x < casillas.length; x++) {
 				consola.write(casillas[x][y].toString()+ "|");
 			}
 			consola.write("\n");
-			consola.write("    ----- ----- ----- ----- ----- ----- ----- -----\n");
+			consola.write("    -- -- -- -- -- -- -- -- -- -- -- --\n");
 		}
-		consola.write("    ");
-		for (int x = 0; x < casillas.length; x++) {
-			consola.write( "  " + casillas[x][0].getLetraY() + "   ");
+		consola.write("  ");
+		for (int x = 0; x < casillas.length; x=x+2) {
+			consola.write( "    " + casillas[x][0].getLetraY() + "   " + casillas[x+1][0].getLetraY());
 		}
 		consola.write("\n");
 	}
 	
 	private void colocarPiezasIniciales() {
-		colocarPiezas(Propiedades.reyBlanco, "Rey", "Blancas");
-		colocarPiezas(Propiedades.reyNegro, "Rey", "Negras");
-		colocarPiezas(Propiedades.peonesBlancos, "Peon", "Blancas");
-		colocarPiezas(Propiedades.peonesNegros, "Peon", "Negras");
-		colocarPiezas(Propiedades.caballosBlancos, "Caballo", "Blancas");
-		colocarPiezas(Propiedades.caballosNegros, "Caballo", "Negras");
-		colocarPiezas(Propiedades.torresBlancas, "Torre", "Blancas");
-		colocarPiezas(Propiedades.torresNegras, "Torre", "Negras");
-		colocarPiezas(Propiedades.alfilesBlancos, "Alfil", "Blancas");
-		colocarPiezas(Propiedades.alfilesNegros, "Alfil", "Negras");
+		Object p[][] = Propiedades.piezas;
+		for (int i = 0; i < p.length; i++) {
+			colocarPiezas ((String[]) p[i][0], (String) p[i][1], (String) p[i][2]);
+		}
 	}
 	
 	private void colocarPiezas(String[] piezas, String tipo, String color) {
 		for (String s : piezas) {
+			// Traducir la letra de la columna a Numero
 			int xOrigen = LetraColumna.obtenerNumero(s.substring(0,1));
 			int yOrigen = Integer.parseInt(s.substring(1,2))-1; 
 			
 			casillas[xOrigen][yOrigen].colocarPieza(tipo, color);
 		}
+	}
+	
+
+	//Pruebas
+	public static void main(String[] args) {
+		Tablero t = new Tablero();
+		/*
+		t.movimientos.add(new Movimiento());
+		t.movimientos.add(new Movimiento());
+		t.movimientos.add(new Movimiento());
+		System.out.println(t.movimientos.toString());
+		*/
+		t.jugar();
 	}
 }

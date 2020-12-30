@@ -1,57 +1,33 @@
 package chess;
 
-import java.util.ArrayList;
-
 public final class Alfil extends Pieza {
 
 	public Alfil(String color) {
 		super("Alfil", color);
+		if (color.equalsIgnoreCase("Blancas")) {
+			this.setSimbolo(new String(Character.toChars(9815)));
+		}
+		else {
+			this.setSimbolo(new String(Character.toChars(9821)));
+		}
 	}
 
 	@Override
 	public RequisitosMovimiento esMovimientoPosible(Coordenada origen, Coordenada destino) {
 		RequisitosMovimiento requisitos = new RequisitosMovimiento();
-		int xOrigen = origen.getX();
-		int yOrigen = origen.getY();
-		int xDestino = destino.getX();
-		int yDestino = destino.getY();
-		ArrayList<Coordenada> aCoordenadasNecesariasVacias = new ArrayList<Coordenada>();
-
-		requisitos.esMovimientoPosible(esMovimientoPosible(xOrigen, yOrigen, xDestino, yDestino));
-		if (!esMovimientoPosible(xOrigen, yOrigen, xDestino, yDestino)) {
+		requisitos.esMovimientoPosible(esMovimientoDeAlfilPosible(origen, destino));
+		if (!requisitos.esMovimientoPosible()) {
 			return requisitos;
 		}
-		Coordenada diferenciaMovimiento = calcularDiferenciaMovimiento(xOrigen, yOrigen, xDestino, yDestino);
-		if (diferenciaMovimiento.getX()>0) {
-			if (diferenciaMovimiento.getY()>0) {
-				for (int i = 1; i < diferenciaMovimiento.getX(); i++) {
-					aCoordenadasNecesariasVacias.add(new Coordenada(xOrigen+i, yOrigen+i));
-				}
-			} else {
-				for (int i = 1; i < diferenciaMovimiento.getX(); i++) {
-					aCoordenadasNecesariasVacias.add(new Coordenada(xOrigen+i, yOrigen-i));
-				}
-			}
-		} else {
-			if (diferenciaMovimiento.getY()>0) {
-				for (int i = -1; i > diferenciaMovimiento.getX(); i--) {
-					aCoordenadasNecesariasVacias.add(new Coordenada(xOrigen+i, yOrigen-i));
-				}
-			} else {
-				for (int i = -1; i > diferenciaMovimiento.getX(); i--) {
-					aCoordenadasNecesariasVacias.add(new Coordenada(xOrigen+i, yOrigen+i));
-				}
-			}
-		}
-		requisitos.casillasLibresNecesariasParaMover(aCoordenadasNecesariasVacias);
+		requisitos.casillasLibresNecesariasParaMover(origen.coordenadasIntermedias(destino));
+		//System.out.println("Intentando Movimiento de Alfil de color:" + color);
+		//System.out.println("Necesito vacías las Coordenadas:" + origen.coordenadasIntermedias(destino));
 		return requisitos;
 	}
 
-	private boolean esMovimientoPosible(int xOrigen, int yOrigen, int xDestino, int yDestino) {
-		return xOrigen!=xDestino && (Math.abs(xDestino-xOrigen) == Math.abs(yDestino-yOrigen));
+	private boolean esMovimientoDeAlfilPosible(Coordenada origen, Coordenada destino) {
+		return origen.enDiagonal(destino) ; 
 	}
 
-	private Coordenada calcularDiferenciaMovimiento(int xOrigen, int yOrigen, int xDestino, int yDestino) {
-		return new Coordenada(xDestino-xOrigen, yDestino-yOrigen);
-	}
+
 }

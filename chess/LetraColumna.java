@@ -1,6 +1,22 @@
 package chess;
 
+
+/*
+ * LetraColumna.A = A
+ * LetraColumna.B = B
+ * LetraColumna.getClaveEnIndice(0) = 1
+ * LetraColumna.getClaveEnIndice(1) = 2
+ * LetraColumna.getClaveEnIndice(2) = 3
+ * 
+ * obtenerLetra devuelve un Objeto LetraColumna
+ * 
+ * letraColumna[1].toString() = A/B/C/D...
+ * 
+ */
+
+
 public enum LetraColumna{
+	//Name(Clave)
 	A(0),
 	B(1),
 	C(2),
@@ -66,4 +82,6 @@ public enum LetraColumna{
     public String getValor() {
         return this.toString();
     }
+    
+
 }

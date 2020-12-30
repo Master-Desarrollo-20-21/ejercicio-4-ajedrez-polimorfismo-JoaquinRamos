@@ -7,10 +7,17 @@ public final class Rey extends Pieza {
 
 	public Rey(String color) {
 		super("Rey", color);
+		if (color.equalsIgnoreCase("Blancas")) {
+			this.setSimbolo(new String(Character.toChars(9812)));
+		}
+		else {
+			this.setSimbolo(new String(Character.toChars(9818)));
+		}
 	}
 
 	@Override
 	public RequisitosMovimiento esMovimientoPosible(Coordenada origen, Coordenada destino) {
+		//El Rey tiene sólo 8 movimientos posibles, pasando de Enroques
 		RequisitosMovimiento requisitos = new RequisitosMovimiento();
 		int xOrigen = origen.getX();
 		int yOrigen = origen.getY();
@@ -25,7 +32,9 @@ public final class Rey extends Pieza {
 			if (coordenada.esIgualA(movimientoHecho)) {
 				requisitos.esMovimientoPosible(true);
 			}
-		} 	
+		} 
+		System.out.println("Intentando Movimiento de Rey de color:" + color);
+		
 		return requisitos;
 	}
 

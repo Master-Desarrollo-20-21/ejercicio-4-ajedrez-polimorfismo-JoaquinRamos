@@ -1,4 +1,59 @@
 @startuml
+
+enum LetraColumna [[java:chess.LetraColumna]] {
+	A
+	B
+	C
+	D
+	E
+	F
+	G
+	H
+	clave
+	~LetraColumna(int i)
+	+{static}LetraColumna obtenerObjetoLetra(int numero)
+	+{static}String obtenerLetra(int numero)
+	+{static}int obtenerNumero(String letra)
+	+{static}String getTodosNumerosDeFilaValidos()
+	+{static}String getTodasLetrasValidas()
+	+int getClave()
+	+String getValor()
+}
+
+class Propiedades [[java:chess.Propiedades]] {
+	+{static}int LONGITUD_TABLERO
+	+{static}String MENSAJE_INTRODUZCA_MOVIMIENTO
+	+{static}String MENSAJE_QUIERECONTINUAR
+	+{static}String MENSAJE_GANADOR_BLANCAS
+	+{static}String MENSAJE_GANADOR_NEGRAS
+	+{static}String MENSAJE_GANADOR
+	+{static}String MENSAJE_PERDEDOR
+	+{static}String ERROR_LONGITUD
+	+{static}String ERROR_PRIMERA_LETRA
+	+{static}String ERROR_PRIMER_NUMERO
+	+{static}String ERROR_SEGUNDA_LETRA
+	+{static}String ERROR_SEGUNDO_NUMERO
+	+{static}String ERROR_NO_HAY_PIEZA_EN_ESA_CASILLA
+	+{static}String ERROR_PIEZA_EN_ESA_CASILLA_NO_ES_DE_TU_COLOR
+	+{static}String ERROR_PIEZA_EN_CASILLA_DESTINO_ES_DE_TU_COLOR
+	+{static}String ERROR_MOVIMIENTO_NO_POSIBLE
+	+{static}String ERROR_HAY_CASILLAS_OCUPADAS
+	+{static}String ERROR_PEON_MUEVE_EN_DIAGONAL
+	+{static}String[] reyBlanco
+	+{static}String[] reyNegro
+	+{static}String[] damaBlanca
+	+{static}String[] damaNegra
+	+{static}String[] peonesBlancos
+	+{static}String[] peonesNegros
+	+{static}String[] caballosBlancos
+	+{static}String[] caballosNegros
+	+{static}String[] torresBlancas
+	+{static}String[] torresNegras
+	+{static}String[] alfilesBlancos
+	+{static}String[] alfilesNegros
+	+{static}Object[][] piezas
+}
+
 class Casilla [[java:chess.Casilla]] {
 	-int x
 	-int y
@@ -21,7 +76,7 @@ class Chess [[java:chess.Chess]] {
 }
 class Tablero [[java:programaOrientadoObjetos.Tablero]] {
 }
-Chess *--> "1" Tablero : tablero
+Chess --> "1" Tablero : tablero
 class Console [[java:mastermind.Console]] {
 }
 Chess --> "1" Console : consola
@@ -50,11 +105,17 @@ class Coordenada [[java:chess.Coordenada]] {
 	+int getY()
 	+void setY(int y)
 	+boolean esIgualA(Coordenada c)
+	+boolean enDiagonal(Coordenada destino)
+	+boolean enMismaFila(Coordenada destino)
+	+boolean enMismaColumna(Coordenada destino)
+	+Coordenada diferenciaMovimiento(Coordenada destino)
+	+ArrayList<Coordenada> coordenadasIntermedias(Coordenada destino)
 	+String toString()
 }
 class Torre [[java:chess.Torre]] {
 	+Torre(String color)
 	+RequisitosMovimiento esMovimientoPosible(Coordenada origen, Coordenada destino)
+	-boolean esMovimientoDeTorrePosible(Coordenada origen, Coordenada destino)
 }
 class Pieza [[java:chess.Pieza]] {
 }
@@ -67,10 +128,27 @@ class Caballo [[java:chess.Caballo]] {
 class Pieza [[java:chess.Pieza]] {
 }
 Pieza <|-- Caballo
+class Dama [[java:chess.Dama]] {
+	+Dama(String color)
+	+RequisitosMovimiento esMovimientoPosible(Coordenada origen, Coordenada destino)
+	-boolean esMovimientoDeDamaPosible(Coordenada origen, Coordenada destino)
+}
+class Pieza [[java:chess.Pieza]] {
+}
+Pieza <|-- Dama
 
+class Alfil [[java:chess.Alfil]] {
+	+Alfil(String color)
+	+RequisitosMovimiento esMovimientoPosible(Coordenada origen, Coordenada destino)
+	-boolean esMovimientoDeAlfilPosible(Coordenada origen, Coordenada destino)
+}
+class Pieza [[java:chess.Pieza]] {
+}
+Pieza <|-- Alfil
 abstract class Pieza [[java:chess.Pieza]] {
 	#String tipo
 	#String color
+	#String simbolo
 	+Pieza()
 	+Pieza(String tipo, String color)
 	+{abstract}RequisitosMovimiento esMovimientoPosible(Coordenada origen, Coordenada destino)
@@ -78,6 +156,8 @@ abstract class Pieza [[java:chess.Pieza]] {
 	+void setTipo(String tipo)
 	+String getColor()
 	+void setColor(String color)
+	+String getSimbolo()
+	+void setSimbolo(String simbolo)
 }
 class Peon [[java:chess.Peon]] {
 	+Peon(String color)
@@ -89,12 +169,14 @@ Pieza <|-- Peon
 class Movimiento [[java:chess.Movimiento]] {
 	-Casilla[][] casillas
 	-String fichasQueMueven
-	~String jugadaEnFormatoLNLN
+	-String jugadaEnFormatoLNLN
+	-Boolean esJaqueMate
 	+Movimiento(Casilla[][] casillas, int numMovimiento)
 	+void leer()
 	-String chequeaError(String textoIntroducido)
 	-boolean estanLasCasillasNecesariasVacias(ArrayList<Coordenada> arrayList)
 	-void moverPieza()
+	+Boolean esJaqueMate()
 }
 class Coordenada [[java:programaOrientadoObjetos.Coordenada]] {
 }
@@ -121,7 +203,7 @@ class Console [[java:mastermind.Console]] {
 }
 Tablero --> "1" Console : consola
 Tablero *--> "*" Movimiento : movimientos
-Tablero *--> "*" Casilla : casillas
+Tablero *--> "64" Casilla : casillas
 class Rey [[java:chess.Rey]] {
 	+Rey(String color)
 	+RequisitosMovimiento esMovimientoPosible(Coordenada origen, Coordenada destino)
@@ -143,16 +225,8 @@ class RequisitosMovimiento [[java:chess.RequisitosMovimiento]] {
 	+void casillasLibresNecesariasParaMover(ArrayList<Coordenada> casillasLibresNecesariasParaMover)
 	+void necesitaPiezaRivalEnDestino(boolean necesitaPiezaRivalEnDestino)
 }
-class Alfil [[java:chess.Alfil]] {
-	+Alfil(String color)
-	+RequisitosMovimiento esMovimientoPosible(Coordenada origen, Coordenada destino)
-	-boolean esMovimientoPosible(int xOrigen, int yOrigen, int xDestino, int yDestino)
-	-Coordenada calcularDiferenciaMovimiento(int xOrigen, int yOrigen, int xDestino, int yDestino)
-}
-class Pieza [[java:chess.Pieza]] {
-}
-Pieza <|-- Alfil
 
 Pieza --> RequisitosMovimiento
 Movimiento --> RequisitosMovimiento
+
 @enduml

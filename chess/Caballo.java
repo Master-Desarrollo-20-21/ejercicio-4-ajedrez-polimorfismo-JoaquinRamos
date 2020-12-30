@@ -7,6 +7,12 @@ public final class Caballo extends Pieza {
 
 	public Caballo(String color) {
 		super("Caballo", color);
+		if (color.equalsIgnoreCase("Blancas")) {
+			this.setSimbolo(new String(Character.toChars(9816)));
+		}
+		else {
+			this.setSimbolo(new String(Character.toChars(9822)));
+		}
 	}
 
 	public RequisitosMovimiento esMovimientoPosible(Coordenada origen, Coordenada destino) {
@@ -25,6 +31,8 @@ public final class Caballo extends Pieza {
 				requisitos.esMovimientoPosible(true);
 			}
 		} 
+		System.out.println("Intentando Movimiento de Caballo de color:" + color);
+		
 		return requisitos;
 	}
 
@@ -36,4 +44,6 @@ public final class Caballo extends Pieza {
 		}
 		return aMovimientosPosibles;
 	}
+
+
 }

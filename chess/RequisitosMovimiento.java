@@ -18,24 +18,24 @@ public class RequisitosMovimiento {
 	public boolean esMovimientoPosible() {
 		return esMovimientoPosible;
 	}
-	
-	public void esMovimientoPosible(boolean esMovimientoPosible) {
-		this.esMovimientoPosible = esMovimientoPosible;
-	}
-
 	public ArrayList<Coordenada> casillasLibresNecesariasParaMover() {
 		return casillasLibresNecesariasParaMover;
+	}
+	public boolean necesitaPiezaRivalEnDestino() {
+		return necesitaPiezaRivalEnDestino;
+	}
+
+
+	public void esMovimientoPosible(boolean esMovimientoPosible) {
+		this.esMovimientoPosible = esMovimientoPosible;
 	}
 
 	public void casillasLibresNecesariasParaMover(ArrayList<Coordenada>  casillasLibresNecesariasParaMover) {
 		this.casillasLibresNecesariasParaMover = casillasLibresNecesariasParaMover;
 	}
 
-	public boolean necesitaPiezaRivalEnDestino() {
-		return necesitaPiezaRivalEnDestino;
-	}
-
 	public void necesitaPiezaRivalEnDestino(boolean necesitaPiezaRivalEnDestino) {
 		this.necesitaPiezaRivalEnDestino = necesitaPiezaRivalEnDestino;
 	}
+
 }
