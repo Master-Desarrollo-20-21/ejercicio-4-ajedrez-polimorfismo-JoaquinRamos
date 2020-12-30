@@ -30,9 +30,7 @@ public final class Caballo extends Pieza {
 			if (coordenada.esIgualA(movimientoHecho)) {
 				requisitos.esMovimientoPosible(true);
 			}
-		} 
-		System.out.println("Intentando Movimiento de Caballo de color:" + color);
-		
+		} 		
 		return requisitos;
 	}
 
@@ -44,6 +42,4 @@ public final class Caballo extends Pieza {
 		}
 		return aMovimientosPosibles;
 	}
-
-
 }

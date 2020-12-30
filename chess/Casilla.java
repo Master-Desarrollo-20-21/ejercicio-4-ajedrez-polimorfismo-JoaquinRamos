@@ -24,13 +24,11 @@ public class Casilla {
 			e.printStackTrace();
 		}	
 	}
-	
 
 	public String toString(){
-		//System.out.println("x=" + x + " e y=" + y + "  y el MOD="+ ((x+y) % 2) );
 		if (pieza == null) {
 			if (((x+y) % 2) == 0 )
-				return " " + new String(Character.toChars(9866)) + " ";//new String(Character.toChars(32));
+				return " " + new String(Character.toChars(9866)) + " ";
 			else
 				return " " + new String(Character.toChars(9867)) + " ";
 		}	
@@ -40,7 +38,6 @@ public class Casilla {
 		}
 	}
 
-	
 	public String getLetraY() {
 		return letraY;
 	}
@@ -56,6 +53,4 @@ public class Casilla {
 	public void setPieza(Pieza pieza) {
 		this.pieza = pieza;
 	}
-
-
 }

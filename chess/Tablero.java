@@ -12,8 +12,6 @@ public class Tablero {
 	private Console consola = new Console();
 	
 	public Tablero(){
-		
-		// Inicializa las 64 casillas
 		casillas = new Casilla[longitudTablero][longitudTablero];
 		for (int i = 0; i < casillas.length; i++) {
 			for (int j = 0; j < casillas.length; j++) {
@@ -23,7 +21,6 @@ public class Tablero {
 		movimientos = new ArrayList<Movimiento>();
 		numJugada = 0;
 		colocarPiezasIniciales();
-		
 	}
 
 	public void jugar() {
@@ -35,10 +32,8 @@ public class Tablero {
 			numJugada++;
 			imprimir();
 		} while (!hayJaqueMate);
-		
 		if (hayJaqueMate) {
 			consola.write(Propiedades.MENSAJE_GANADOR_BLANCAS);
-			
 		}
 		else {
 			consola.write(Propiedades.MENSAJE_GANADOR_NEGRAS)  ;
@@ -72,24 +67,9 @@ public class Tablero {
 	
 	private void colocarPiezas(String[] piezas, String tipo, String color) {
 		for (String s : piezas) {
-			// Traducir la letra de la columna a Numero
 			int xOrigen = LetraColumna.obtenerNumero(s.substring(0,1));
-			int yOrigen = Integer.parseInt(s.substring(1,2))-1; 
-			
+			int yOrigen = Integer.parseInt(s.substring(1,2))-1; 		
 			casillas[xOrigen][yOrigen].colocarPieza(tipo, color);
 		}
-	}
-	
-
-	//Pruebas
-	public static void main(String[] args) {
-		Tablero t = new Tablero();
-		/*
-		t.movimientos.add(new Movimiento());
-		t.movimientos.add(new Movimiento());
-		t.movimientos.add(new Movimiento());
-		System.out.println(t.movimientos.toString());
-		*/
-		t.jugar();
 	}
 }

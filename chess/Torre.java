@@ -15,20 +15,15 @@ public final class Torre extends Pieza {
 	@Override
 	public RequisitosMovimiento esMovimientoPosible(Coordenada origen, Coordenada destino) {
 		RequisitosMovimiento requisitos = new RequisitosMovimiento();
-		
 		requisitos.esMovimientoPosible(esMovimientoDeTorrePosible(origen, destino));
 		if (!requisitos.esMovimientoPosible()) {
 			return requisitos;
 		}
-		
 		requisitos.casillasLibresNecesariasParaMover(origen.coordenadasIntermedias(destino));
-		System.out.println("Intentando Movimiento de Torre de color:" + color);
-		System.out.println("Necesito vacías las Coordenadas:" + origen.coordenadasIntermedias(destino));
 		return requisitos;
 	}
 
 	private boolean esMovimientoDeTorrePosible(Coordenada origen, Coordenada destino) {
 		return origen.enMismaFila(destino) || origen.enMismaColumna(destino); 
 	}
-	
 }

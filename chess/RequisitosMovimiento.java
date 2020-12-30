@@ -25,7 +25,6 @@ public class RequisitosMovimiento {
 		return necesitaPiezaRivalEnDestino;
 	}
 
-
 	public void esMovimientoPosible(boolean esMovimientoPosible) {
 		this.esMovimientoPosible = esMovimientoPosible;
 	}
@@ -37,5 +36,4 @@ public class RequisitosMovimiento {
 	public void necesitaPiezaRivalEnDestino(boolean necesitaPiezaRivalEnDestino) {
 		this.necesitaPiezaRivalEnDestino = necesitaPiezaRivalEnDestino;
 	}
-
 }

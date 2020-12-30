@@ -21,20 +21,23 @@ public abstract class Pieza {
 	public String getTipo() {
 		return tipo;
 	}
+
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+
 	public String getColor() {
 		return color;
 	}
 	public void setColor(String color) {
 		this.color = color;
 	}
+
 	public String getSimbolo() {
 		return simbolo;
 	}
+	
 	public void setSimbolo(String simbolo) {
 		this.simbolo = simbolo;
 	}
-
 }

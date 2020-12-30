@@ -16,8 +16,6 @@ public final class Dama extends Pieza {
 	public RequisitosMovimiento esMovimientoPosible(Coordenada origen, Coordenada destino) {
 		RequisitosMovimiento requisitos = new RequisitosMovimiento();	
 		requisitos.esMovimientoPosible(esMovimientoDeDamaPosible(origen, destino));
-		System.out.println("Intentando Movimiento de Dama de color:" + color);
-		System.out.println("Necesito vacías las Coordenadas:" + origen.coordenadasIntermedias(destino));
 		requisitos.casillasLibresNecesariasParaMover(origen.coordenadasIntermedias(destino));
 		return requisitos;
 	}
